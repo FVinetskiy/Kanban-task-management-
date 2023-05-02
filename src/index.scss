@@ -1,3 +1,21 @@
+html[data-scheme='light'] {
+  --MainBack: #ffffff;
+  --BoardBackground: #f4f7fd;
+  --ColorText: #000112;
+  --border-color: #e4ebfa;
+  --NewColumn: #eaf0fa;
+  --Cancel: rgba(99, 95, 199, 0.1);
+}
+
+html[data-scheme='dark'] {
+  --MainBack: #2b2c37;
+  --BoardBackground: #20212c;
+  --ColorText: #ffffff;
+  --border-color: #3e3f4e;
+  --NewColumn: #22232e;
+  --Cancel: #fff;
+}
+
 * {
   box-sizing: border-box;
   outline: none;
@@ -10,9 +28,12 @@ a {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 375px;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
   overflow: auto;
+  min-height: 100vh;
+  background: var(--MainBack);
 }
 
 button {
@@ -24,4 +45,73 @@ button {
   max-width: 1200px;
   padding: 0 20px;
   margin: 0 auto;
+}
+
+.app {
+  display: flex;
+}
+
+.button {
+  background: #635fc7;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border: 0;
+  padding: 0px 24px;
+  flex: 0 0 auto;
+  &:disabled {
+    background: #d8d7f1;
+    cursor: not-allowed;
+  }
+  span {
+    margin-left: 10px;
+  }
+
+  &--auto {
+    padding: 10px;
+    width: auto;
+    height: auto;
+  }
+  @media screen and (max-width: 768px) {
+    width: 48px;
+    height: 32px;
+    &--auto {
+      width: auto;
+      height: auto;
+      padding: 10px;
+    }
+    span {
+      display: none;
+    }
+  }
+}
+
+// style react-select
+.css-1dimb5e-singleValue {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  color: #000112;
+}
+.css-1jqq78o-placeholder {
+  font-size: 13px;
+}
+.css-13cymwt-control,
+.css-t3ipsp-control {
+  background-color: var(--MainBack) !important;
+  border-color: rgba(130, 143, 163, 0.25) !important;
+}
+.css-w9q2zk-Input2,
+.css-1dimb5e-singleValue {
+  color: var(--ColorText) !important;
+}
+.css-1nmdiq5-menu {
+  background-color: var(--MainBack) !important;
+  max-height: 100px;
+  overflow: auto;
 }

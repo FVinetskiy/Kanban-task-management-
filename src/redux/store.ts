@@ -1,11 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit'
-import mainReducer from './slice/mainReducer'
+import themeSlice from './slice/theme'
+import {useDispatch} from 'react-redux'
 
 export const store = configureStore({
   reducer: {
-    mainReducer,
+    themeSlice,
   },
 })
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()

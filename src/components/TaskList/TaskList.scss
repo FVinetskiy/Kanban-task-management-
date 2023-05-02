@@ -1,0 +1,72 @@
+.list-task {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  &__item {
+    width: 280px;
+    margin-right: 24px;
+    height: calc(100vh - 170px);
+    overflow: auto;
+    scrollbar-color: #d4aa70 #e4e4e4;
+    transition: scrollbar-color 0.3s ease-out;
+    padding-right: 10px;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 5px #fff;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #635fc7;
+      border-radius: 10px;
+    }
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: 2.4px;
+    color: #828fa3;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  &__mark {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: block;
+    margin-right: 12px;
+  }
+}
+
+.newColumn {
+  width: 280px;
+  flex: 0 0 auto;
+  background: var(--NewColumn);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  color: #828fa3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  height: calc(100vh - 170px);
+  border-radius: 6px;
+  transition: all 230ms ease-in;
+  &:hover {
+    color: #635fc7;
+  }
+}
+
+.main-list-task {
+  display: flex;
+  flex-wrap: nowrap;
+}

@@ -1,0 +1,13 @@
+.MainContent {
+  overflow: auto;
+  width: 100%;
+
+  &__content {
+    background: var(--BoardBackground);
+    min-height: calc(100vh - 96px);
+    display: flex;
+    transition: all 230ms ease-in;
+    padding: 24px;
+    overflow: auto;
+  }
+}
