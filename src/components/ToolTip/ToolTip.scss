@@ -33,9 +33,6 @@
   z-index: 1;
 
   &.left {
-    left: -100%;
-    @media screen and (max-width: 768px) {
-      left: -140%;
-    }
+    left: -140%;
   }
 }

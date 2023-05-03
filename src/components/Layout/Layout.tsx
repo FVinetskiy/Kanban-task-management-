@@ -1,14 +1,13 @@
 import './Layout.scss'
 import Header from '../Header/Header'
 import TaskList from '../TaskList/TaskList'
-import {useContext} from 'react'
+import {useContext, FC} from 'react'
 import {DataContext} from '../../context/DataContext'
 import BoardEmpty from '../BoardEmpty/BoardEmpty'
 import Modal from '../Modal/Modal'
 import ModalTaskContent from '../Modal/ModalTaskContent/ModalTaskContent'
 import ModalContentDeleteTask from '../Modal/ModalContentDeleteTask/ModalContentDeleteTask'
 import ModalContentEditTask from '../Modal/ModalContentEditTask/ModalContentEditTask'
-import {FC} from 'react'
 
 const Layout: FC = () => {
   const {
@@ -25,7 +24,7 @@ const Layout: FC = () => {
 
   const currentTab = boardData[activeTab]?.columns
 
-  const NewColumn = () => {
+  const NewColumn = (): void => {
     const localBoards = [...boardData]
     const currentColumn = localBoards[activeTab]?.columns
     const DefNewColumn = [{name: 'Default Name', tasks: []}]
@@ -33,10 +32,10 @@ const Layout: FC = () => {
     setBoardData(localBoards)
   }
 
-  const onCloseModalEditTask = () => {
+  const onCloseModalEditTask = (): void => {
     setModalEditTask(false)
   }
-  const onCloseModalDeleteTask = () => {
+  const onCloseModalDeleteTask = (): void => {
     setModalDeleteTask(false)
   }
 
