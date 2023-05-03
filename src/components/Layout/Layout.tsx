@@ -1,8 +1,7 @@
 import './Layout.scss'
-import {Outlet} from 'react-router-dom'
 import Header from '../Header/Header'
 import TaskList from '../TaskList/TaskList'
-import {useContext, useState} from 'react'
+import {useContext} from 'react'
 import {DataContext} from '../../context/DataContext'
 import BoardEmpty from '../BoardEmpty/BoardEmpty'
 import Modal from '../Modal/Modal'
@@ -10,7 +9,6 @@ import ModalTaskContent from '../Modal/ModalTaskContent/ModalTaskContent'
 import ModalContentDeleteTask from '../Modal/ModalContentDeleteTask/ModalContentDeleteTask'
 import ModalContentEditTask from '../Modal/ModalContentEditTask/ModalContentEditTask'
 import {FC} from 'react'
-import {useLocalStorage} from '../../hooks/useLocalStorage.ts'
 
 const Layout: FC = () => {
   const {
@@ -27,15 +25,19 @@ const Layout: FC = () => {
 
   const currentTab = boardData[activeTab]?.columns
 
-  const [column, setColumn] = useLocalStorage([], 'columns')
-
   const NewColumn = () => {
     const localBoards = [...boardData]
     const currentColumn = localBoards[activeTab]?.columns
     const DefNewColumn = [{name: 'Default Name', tasks: []}]
     Array.prototype.push.apply(currentColumn, DefNewColumn)
     setBoardData(localBoards)
-    setColumn([...column, DefNewColumn])
+  }
+
+  const onCloseModalEditTask = () => {
+    setModalEditTask(false)
+  }
+  const onCloseModalDeleteTask = () => {
+    setModalDeleteTask(false)
   }
 
   return (
@@ -44,7 +46,7 @@ const Layout: FC = () => {
         <Header />
         <div className='MainContent__content'>
           <ul className='list-task'>
-            {currentTab?.map((column, index) => {
+            {currentTab?.map((column: any, index: number) => {
               return <TaskList index={index} key={index} {...column} />
             })}
             {activeTab !== null && currentTab?.length > 0 ? (
@@ -64,10 +66,10 @@ const Layout: FC = () => {
         <ModalTaskContent />
       </Modal>
       <Modal active={ModalDeleteTask} setActive={setModalDeleteTask}>
-        <ModalContentDeleteTask onClose={setModalDeleteTask} />
+        <ModalContentDeleteTask onClose={onCloseModalDeleteTask} />
       </Modal>
       <Modal active={ModalEditTask} setActive={setModalEditTask}>
-        <ModalContentEditTask onClose={setModalEditTask} />
+        <ModalContentEditTask onClose={onCloseModalEditTask} />
       </Modal>
     </>
   )

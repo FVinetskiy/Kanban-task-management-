@@ -2,7 +2,11 @@ import React, {useContext, FC} from 'react'
 import './ModalContentDeleteTask.scss'
 import {DataContext} from '../../../context/DataContext'
 
-const ModalContentDeleteTask: FC = ({onClose}) => {
+type propsModalDeleteTask = {
+  onClose: () => void
+}
+
+const ModalContentDeleteTask: FC<propsModalDeleteTask> = ({onClose}) => {
   const {boardData, setBoardData, activeTab, indexColumns, indexTask} =
     useContext(DataContext)
 
@@ -13,7 +17,7 @@ const ModalContentDeleteTask: FC = ({onClose}) => {
     const localBoards = [...boardData]
     const filteredTasks = localBoards[activeTab]?.columns[
       indexColumns
-    ].tasks.filter((value, index) => index !== indexTask)
+    ].tasks.filter((value:any, index: number) => index !== indexTask)
     if (localBoards[activeTab]?.columns[indexColumns]?.tasks) {
       localBoards[activeTab].columns[indexColumns].tasks = filteredTasks
     }

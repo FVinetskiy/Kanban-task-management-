@@ -5,23 +5,27 @@ import {useContext, useState} from 'react'
 import {Cross} from '../../icons/cross'
 import Input from '../../UI/Input/Input'
 
-const ModalEditBoard: FC = ({onClose}) => {
+type PropsModalEdit = {
+  onClose: () => void
+}
+
+const ModalEditBoard: FC<PropsModalEdit> = ({onClose}) => {
   const {boardData, activeTab, setBoardData} = useContext(DataContext)
   const columns = boardData[activeTab]?.columns
   const valueTitleName = boardData[activeTab].name
   const [valueTitle, setValueTitle] = useState(valueTitleName)
   const [arrColumn, setArrColumn] = useState(columns)
 
-  const deleteInput = (index) => {
+  const deleteInput = (index: number) => {
     setArrColumn([...arrColumn.slice(0, index), ...arrColumn.slice(index + 1)])
   }
 
-  const handleChange = (e) => {
-    setValueTitle(event.target.value)
+  const handleChange = (e: string) => {
+    setValueTitle(e)
   }
 
   const addNewColumn = () => {
-    setArrColumn(arrColumn.concat([{name: '', value: '', tasks: []}]))
+    setArrColumn(arrColumn.concat([{name: '', tasks: []}]))
   }
 
   const SaveSetting = () => {
@@ -32,8 +36,8 @@ const ModalEditBoard: FC = ({onClose}) => {
     onClose()
   }
 
-  const handleInputChange = (value, index) => {
-    setArrColumn((prev) => {
+  const handleInputChange = (value: any, index: number) => {
+    setArrColumn((prev: any) => {
       const localColumns = [...prev]
       localColumns[index].value = value
       localColumns[index].name = value
@@ -56,7 +60,7 @@ const ModalEditBoard: FC = ({onClose}) => {
       <div className='edit-board__item'>
         <p className='edit-board__sub-title'>Board Columns</p>
         <div className='edit-board__content'>
-          {arrColumn.map((item, index) => (
+          {arrColumn.map((item: any, index: number) => (
             <div className='edit-board__wrapper' key={index}>
               <Input
                 value={item.name}

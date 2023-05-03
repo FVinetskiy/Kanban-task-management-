@@ -1,7 +1,4 @@
-import {useContext} from 'react'
 import './BoardEmpty.scss'
-import {DataContext} from '../../context/DataContext'
-import {useParams} from 'react-router-dom'
 import {FC} from 'react'
 
 type PropsBoardEmpty = {

@@ -1,13 +1,13 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import NavBar from './components/NavBar/NavBar'
 import Layout from './components/Layout/Layout'
-import React, {useContext, FC} from 'react'
+import {FC} from 'react'
 import {DataContext} from './context/DataContext'
-import data from '../data.json'
+import {getDataLocalStorage} from './utils/getDataLocalStorage'
 
 const App: FC = () => {
-  const [boardData, setBoardData] = useState(data.boards)
-  const [activeTab, setActiveTab] = useState(null)
+  const [boardData, setBoardData] = useState(getDataLocalStorage())
+  const [activeTab, setActiveTab] = useState<any | null>(null)
   const [modalTask, setModalTask] = useState<boolean>(false)
   const [indexTask, setIndexTask] = useState(null)
   const [indexColumns, setIndexColumns] = useState(null)
@@ -15,6 +15,7 @@ const App: FC = () => {
   const [ModalEditTask, setModalEditTask] = useState<boolean>(false)
   const [showNav, setShowNav] = useState<boolean>(true)
   const [isMobile, setIsMobile] = useState<boolean>(false)
+  const isMounted = useRef(false)
 
   const handleResize = () => {
     if (window.innerWidth < 769) {
@@ -30,6 +31,14 @@ const App: FC = () => {
     window.addEventListener('load', handleResize)
     window.addEventListener('resize', handleResize)
   })
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(boardData)
+      localStorage.setItem('data', json)
+    }
+    isMounted.current = true
+  }, [boardData])
 
   return (
     <main className='app'>

@@ -54,8 +54,8 @@ const CreateBoard: FC<TypePropsCreateBoard> = ({closeModal}) => {
     ])
   }
 
-  const handleInputChange = (value, i) => {
-    setValueNameFirst((prev) => {
+  const handleInputChange = (value: string, i: number) => {
+    setValueNameFirst((prev: any) => {
       const arr2 = [...prev]
       arr2[i].value = value
       arr2[i].name = value
@@ -80,7 +80,7 @@ const CreateBoard: FC<TypePropsCreateBoard> = ({closeModal}) => {
         {stateArrInput.length > 0 ? (
           <p className='create-board__sub-title'>Columns</p>
         ) : null}
-        {stateArrInput.map((item, i) => (
+        {stateArrInput.map((item:any, i) => (
           <div className='create-board__wrap-input' key={i}>
             <Input
               placeholder={'e.g. Web Design'}

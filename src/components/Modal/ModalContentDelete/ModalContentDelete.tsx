@@ -2,14 +2,18 @@ import React, {useContext, FC} from 'react'
 import './ModalContentDelete.scss'
 import {DataContext} from '../../../context/DataContext'
 
-const ModalContentDelete: FC = ({onClose}) => {
+type PropsDelete = {
+  onClose: () => void
+}
+
+const ModalContentDelete: FC<PropsDelete> = ({onClose}) => {
   const {boardData, activeTab, setBoardData} = useContext(DataContext)
   const currentTabName = boardData[activeTab].name
 
   const onClickDeleteBoard = () => {
     const localBoards = [...boardData]
     const filteredArray = localBoards.filter(
-      (value, index) => index !== activeTab,
+      (value:any, index: number) => index !== activeTab,
     )
     setBoardData(filteredArray)
     onClose()

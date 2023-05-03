@@ -1,23 +1,20 @@
 import {FC} from 'react'
 import './Task.scss'
-import {useContext, useState} from 'react'
+import {useContext} from 'react'
 import {DataContext} from '../../context/DataContext'
 
 type TaskProps = {
   title: String
   lengthSubtask?: number
   isCompletedLength?: number
-  onClick?: (() => void) | undefined
+  index: number
 }
 
 const Task: FC<TaskProps> = ({
   title,
   lengthSubtask = 0,
   isCompletedLength = 0,
-  setModal,
-  subtasks,
   index,
-  card,
 }) => {
   const {setModalTask, setIndexTask} = useContext(DataContext)
 

@@ -1,12 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {RootState} from '../store'
 
+
+const getThemeLocalStorage = ( ) => {
+  const dataScheme = localStorage.getItem('scheme')
+  return dataScheme ? JSON.parse(dataScheme) : 'light'
+}
+
 export interface themeSliceState {
   theme: 'light' | 'dark'
 }
 
 const initialState: themeSliceState = {
-  theme: 'light',
+  theme: getThemeLocalStorage()
 }
 
 export const themeSlice = createSlice({

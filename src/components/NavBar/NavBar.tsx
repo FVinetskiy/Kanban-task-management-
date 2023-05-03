@@ -1,10 +1,8 @@
-import {FC, useContext, useState, useEffect} from 'react'
-import {NavLink} from 'react-router-dom'
+import {FC, useContext, useState} from 'react'
 import {Board} from '../icons/board'
 import {LogoDark} from '../icons/LogoDark'
 import {HideSidebar} from '../icons/HideSidebar'
 import {IconShowSidebar} from '../icons/iconShowSidebar'
-import {Link} from 'react-router-dom'
 import SwitchTheme from '../SwitchTheme/SwitchTheme'
 import Modal from '../Modal/Modal'
 import './NavBar.scss'
@@ -14,21 +12,21 @@ import {DataContext} from '../../context/DataContext'
 const NavBar: FC = () => {
   const {boardData, activeTab, setActiveTab, showNav, setShowNav, isMobile} =
     useContext(DataContext)
-  const openTab = (index) => setActiveTab(index)
+  const openTab = (index: number) => setActiveTab(index)
   const [modalState, setModal] = useState(false)
 
   const HideNavBar = () => {
     setShowNav(!showNav)
   }
 
-  const openCurrentTab = (index) => {
+  const openCurrentTab = (index: number) => {
     openTab(index)
     if (isMobile === true) {
       setShowNav(!showNav)
     }
   }
 
-  const ListName = boardData.map((item, index) => (
+  const ListName = boardData.map((item: any, index: number) => (
     <button
       onClick={() => openCurrentTab(index)}
       className={`navLink ${index === activeTab ? 'active' : ''}`}

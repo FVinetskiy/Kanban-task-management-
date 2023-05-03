@@ -7,18 +7,24 @@ import {Cross} from '../../icons/cross'
 import Input from '../../UI/Input/Input'
 import TextArea from '../../UI/TextArea/TextArea'
 
-const ModalContentEditTask: FC = ({onClose}) => {
+type PropsModalEditTask = {
+  onClose: () => void
+}
+
+const ModalContentEditTask: FC<PropsModalEditTask> = ({onClose}) => {
   const {boardData, activeTab, setBoardData, indexColumns, indexTask} =
     useContext(DataContext)
 
   const selectOptions = boardData[activeTab].columns
-    .map((item, index) => [{value: item.name, label: item.name, index: index}])
+    .map((item: any, index: number) => [
+      {value: item.name, label: item.name, index: index},
+    ])
     .flat()
 
   const currentTask =
     boardData[activeTab]?.columns[indexColumns]?.tasks[indexTask]
   const valueTitleName =
-    boardData[activeTab].columns[indexColumns].tasks[indexTask].title
+    boardData[activeTab].columns[indexColumns].tasks[indexTask]?.title
   const valueDescription =
     boardData[activeTab].columns[indexColumns].tasks[indexTask].description
   const currentSubtasks =
@@ -29,12 +35,12 @@ const ModalContentEditTask: FC = ({onClose}) => {
   const [IndexSelect, setIndexSelect] = useState(0)
   const localBoard = [...boardData]
 
-  const deleteInput = (index) => {
+  const deleteInput = (index: number) => {
     setSubTasks([...subTasks.slice(0, index), ...subTasks.slice(index + 1)])
   }
 
-  const handleInputChange = (value, index) => {
-    setSubTasks((prev) => {
+  const handleInputChange = (value: any, index: number) => {
+    setSubTasks((prev: any) => {
       const localSubtasks = [...prev]
       localSubtasks[index].title = value
       return localSubtasks
@@ -45,11 +51,11 @@ const ModalContentEditTask: FC = ({onClose}) => {
     setSubTasks(subTasks.concat([{title: '', isCompleted: false}]))
   }
 
-  const onChangeSelect = (event) => {
+  const onChangeSelect = (event:any) => {
     if (indexColumns !== event.index) {
       const newColumnTask = localBoard[activeTab]?.columns[
         indexColumns
-      ].tasks.filter((elem, index) => index !== IndexSelect)
+      ].tasks.filter((elem: any, index: number) => index !== IndexSelect)
       localBoard[activeTab].columns[indexColumns].tasks = newColumnTask
       const chosenColumn = localBoard[activeTab].columns[event.index].tasks
       chosenColumn.push(currentTask)
@@ -57,8 +63,11 @@ const ModalContentEditTask: FC = ({onClose}) => {
   }
 
   const save = () => {
-    localBoard[activeTab].columns[indexColumns].tasks[indexTask].title =
-      valueTitle
+    if (localBoard[activeTab].columns[indexColumns].tasks[indexTask]?.title) {
+      localBoard[activeTab].columns[indexColumns].tasks[indexTask].title =
+        valueTitle
+    }
+
     localBoard[activeTab].columns[indexColumns].tasks[indexTask].description =
       valueTextarea
     localBoard[activeTab].columns[indexColumns].tasks[indexTask].subtasks =
@@ -94,7 +103,7 @@ const ModalContentEditTask: FC = ({onClose}) => {
           <p className='edit-task__sub-title'>Subtasks</p>
         ) : null}
         <div className='edit-task__content-sub'>
-          {subTasks.map((item, index) => (
+          {subTasks.map((item: any, index: number) => (
             <div className='edit-board__wrapper' key={index}>
               <Input
                 value={item.title}

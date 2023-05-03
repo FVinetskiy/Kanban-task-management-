@@ -2,7 +2,6 @@ import './Header.scss'
 import {VerticalEllipse} from '../icons/VerticalEllipse'
 import ToolTip from '../ToolTip/ToolTip'
 import {useContext, useState} from 'react'
-import {useParams} from 'react-router-dom'
 import ModalContentDelete from '../Modal/ModalContentDelete/ModalContentDelete.jsx'
 import Modal from '../Modal/Modal'
 import ModalCreateTask from '../Modal/ModalCreateTask/ModalCreateTask'
@@ -10,18 +9,16 @@ import ModalEditBoard from '../Modal/ModalEditBoard/ModalEditBoard'
 import {DataContext} from '../../context/DataContext'
 import {Chevron} from '../icons/chevron'
 import {FC} from 'react'
-import {CurrentContextType} from '../../context/DataContext'
 
 const Header: FC = () => {
-  const {boardData, activeTab, showNav, setShowNav} =
-    useContext<CurrentContextType>(DataContext)
-  const [ModalActive, setModalActive] = useState(false)
+  const {boardData, activeTab, showNav, setShowNav} = useContext(DataContext)
   const [ModalDeleteActive, setModalDeleteActive] = useState(false)
   const [ModalNewTask, setModalNewTask] = useState(false)
   const [ToolTipOpen, setToolTipOpen] = useState(false)
   const [editModal, setEditModal] = useState(false)
 
-  const titleBoard = boardData[activeTab]?.name
+  const titleBoard = boardData[activeTab]?.['name']
+
   const currentColumnLength = boardData[activeTab]?.columns.length
 
   const ToggleToolTeep = () => {
@@ -35,6 +32,16 @@ const Header: FC = () => {
 
   const onClickEditModal = () => {
     ToggleToolTeep()
+    setEditModal(!editModal)
+  }
+
+  const onCloseDeleteModal = () => {
+    setModalDeleteActive(!ModalDeleteActive)
+  }
+  const onCloseCreateModal = () => {
+    setModalNewTask(!ModalNewTask)
+  }
+  const onCloseModalEdit = () => {
     setEditModal(!editModal)
   }
 
@@ -78,15 +85,13 @@ const Header: FC = () => {
       </header>
 
       <Modal active={ModalDeleteActive} setActive={setModalDeleteActive}>
-        <ModalContentDelete onClose={setModalDeleteActive} />
+        <ModalContentDelete onClose={onCloseDeleteModal} />
       </Modal>
-
       <Modal active={ModalNewTask} setActive={setModalNewTask}>
-        <ModalCreateTask onClose={setModalNewTask} />
+        <ModalCreateTask onClose={onCloseCreateModal} />
       </Modal>
-
       <Modal active={editModal} setActive={setEditModal}>
-        <ModalEditBoard onClose={setEditModal} />
+        <ModalEditBoard onClose={onCloseModalEdit} />
       </Modal>
     </>
   )

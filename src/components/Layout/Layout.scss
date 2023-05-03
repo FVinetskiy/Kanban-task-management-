@@ -1,6 +1,8 @@
 .MainContent {
   overflow: auto;
   width: 100%;
+  background: var(--MainBack);
+  transition: all 230ms ease-in;
 
   &__content {
     background: var(--BoardBackground);

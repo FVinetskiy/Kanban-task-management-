@@ -1,12 +1,29 @@
-import {useParams} from 'react-router-dom'
 import './TaskList.scss'
 import {useContext, useEffect, useState, FC} from 'react'
 import Task from '../Task/Task'
 import LoaderColumn from '../LoaderCulumns/LoaderColumns'
 import {DataContext} from '../../context/DataContext'
 
-const TaskList: FC = (column, {index}) => {
-  const [isLoading, setisLoading] = useState(true)
+type PropsTaskList = {
+  index: number
+  name: string
+  tasks: []
+}
+
+type subtask = {
+  title: string
+  isCompleted: boolean
+}
+
+type PropsTask = {
+  title: string
+  description: string
+  status: string
+  subtasks: subtask[]
+}
+
+const TaskList: FC<PropsTaskList> = (column) => {
+  const [isLoading, setIsLoading] = useState(true)
   const {setIndexColumns} = useContext(DataContext)
 
   const getIndex = () => {
@@ -14,9 +31,9 @@ const TaskList: FC = (column, {index}) => {
   }
 
   useEffect(() => {
-    setisLoading(true)
+    setIsLoading(true)
     setTimeout(() => {
-      setisLoading(false)
+      setIsLoading(false)
     }, 500)
   }, [])
 
@@ -35,15 +52,15 @@ const TaskList: FC = (column, {index}) => {
               }}></span>
             {column?.name} ({column?.tasks?.length})
           </p>
-          {column?.tasks?.map((i, index) => (
+          {column?.tasks?.map((i: PropsTask, index: number) => (
             <Task
               key={i.title}
               index={index}
               title={i.title}
-              subtasks={i.subtasks}
               lengthSubtask={i.subtasks?.length}
               isCompletedLength={
-                i.subtasks?.filter((elem) => elem.isCompleted === true).length
+                i.subtasks?.filter((elem: any) => elem.isCompleted === true)
+                  .length
               }
             />
           ))}

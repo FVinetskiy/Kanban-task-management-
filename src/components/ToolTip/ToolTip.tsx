@@ -8,8 +8,8 @@ type PropsToolTip = {
   customClass?: 'left'
   textEdit?: string
   textDelete?: string
-  onClickDelete?: Function
-  onClickEdit?: Function
+  onClickDelete?: () => void
+  onClickEdit?: () => void
 }
 
 const ToolTip: FC<PropsToolTip> = ({

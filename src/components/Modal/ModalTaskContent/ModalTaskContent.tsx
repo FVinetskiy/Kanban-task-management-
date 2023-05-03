@@ -1,10 +1,15 @@
-import React, {useContext, useState, FC} from 'react'
+import {useContext, useState, FC} from 'react'
 import './ModalTaskContent.scss'
 import {DataContext} from '../../../context/DataContext'
 import Checkbox from '../../UI/Checkbox/Checkbox'
 import {VerticalEllipse} from '../../icons/VerticalEllipse'
 import ToolTip from '../../ToolTip/ToolTip'
-import Select from 'react-select'
+import Select, {SingleValue} from 'react-select'
+
+type PropsNewValueColumn = {
+  label: string
+  value: string
+}
 
 const ModalTaskContent: FC = () => {
   const {
@@ -23,9 +28,9 @@ const ModalTaskContent: FC = () => {
   const [ToolTipTask, setToolTipTask] = useState(false)
   const currentTask =
     boardData[activeTab]?.columns[indexColumns].tasks[indexTask]
-  const subLength = currentTask.subtasks.length
+  const subLength = currentTask?.subtasks?.length
   const subLengthComplete = currentTask.subtasks.filter(
-    (elem) => elem.isCompleted === true,
+    (elem: any) => elem.isCompleted === true,
   ).length
   const currentSubtask = currentTask.subtasks
   const [Subtasks, setSubtasks] = useState(currentSubtask)
@@ -46,7 +51,7 @@ const ModalTaskContent: FC = () => {
     setModalTask(false)
   }
 
-  const handleClick = (index) => {
+  const handleClick = (index: number) => {
     const newArr = [...Subtasks]
     if (newArr[index].isCompleted === true) {
       newArr[index].isCompleted = false
@@ -57,25 +62,29 @@ const ModalTaskContent: FC = () => {
   }
 
   const selectOptions = boardData[activeTab]?.columns
-    .map((item) => [{value: item.name, label: item.name}])
+    .map((item: any) => [{value: item.name, label: item.name}])
     .flat()
 
-  const onChangeSelect = (newWalue) => {
+  const onChangeSelect = (
+    newValue: SingleValue<PropsNewValueColumn> | null,
+  ) => {
     const localBoards = [...boardData]
     const currentColumnName = localBoards[activeTab]?.columns[indexColumns].name
-    if (currentColumnName !== newWalue.value) {
+    if (currentColumnName !== newValue?.value) {
       const newListTasks = boardData[activeTab]?.columns[
         indexColumns
-      ].tasks.filter((elem, index) => index !== indexTask)
+      ].tasks.filter((elem: any, index: number) => index !== indexTask)
       localBoards[activeTab].columns[indexColumns].tasks = newListTasks
+
       const choiceColum = localBoards[activeTab]?.columns.find(
-        function choiceColumnElem(element) {
-          return element.name === newWalue.value
+        function choiceColumnElem(element: any) {
+          return element.name === newValue?.value
         },
       )
-      choiceColum.tasks.push(currentTask)
+      choiceColum?.tasks.push(currentTask)
     }
     setModalTask(false)
+    setBoardData(localBoards)
   }
 
   return (
@@ -101,7 +110,7 @@ const ModalTaskContent: FC = () => {
         Subtasks (<span>{subLengthComplete}</span> of <span>{subLength}</span> )
       </p>
       <div className='current-task__container-check'>
-        {Subtasks.map((item, index) => (
+        {Subtasks.map((item: any, index: number) => (
           <Checkbox
             checked={item.isCompleted}
             key={index}

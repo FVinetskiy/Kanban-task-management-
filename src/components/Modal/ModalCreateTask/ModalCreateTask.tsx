@@ -8,25 +8,31 @@ import Input from '../../UI/Input/Input'
 import TextArea from '../../UI/TextArea/TextArea'
 import {FC} from 'react'
 
-const ModalCreateTask: FC = ({onClose}) => {
+type PropsModalCreate = {
+  onClose: () => void
+}
+
+const ModalCreateTask: FC<PropsModalCreate> = ({onClose}) => {
   const {boardData, activeTab, setBoardData, indexColumns} =
     useContext(DataContext)
   const selectOptions = boardData[activeTab]?.columns
-    .map((item, index) => [{value: item.name, label: item.name, index: index}])
+    .map((item: any, index: number) => [
+      {value: item.name, label: item.name, index: index},
+    ])
     .flat()
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [Subtasks, setSubtasks] = useState([])
+  const [Subtasks, setSubtasks] = useState<any[]>([])
   const [SelectStatus, setSelectStatus] = useState(selectOptions[0]?.value)
   const [IndexSelect, setIndexSelect] = useState(0)
 
-  const onChangeSelect = (event) => {
+  const onChangeSelect = (event: any) => {
     setSelectStatus(event.value)
     setIndexSelect(event.index)
   }
 
-  const deleteInput = (index) => {
+  const deleteInput = (index: number) => {
     setSubtasks([...Subtasks.slice(0, index), ...Subtasks.slice(index + 1)])
   }
 
@@ -47,7 +53,7 @@ const ModalCreateTask: FC = ({onClose}) => {
     setSubtasks(Subtasks.concat([{title: '', isCompleted: false, value: ''}]))
   }
 
-  const handleInputChange = (value, i) => {
+  const handleInputChange = (value: any, i: number) => {
     setSubtasks((prev) => {
       const subTasks = [...prev]
       subTasks[i].value = value
@@ -80,7 +86,7 @@ recharge the batteries a little.'
       {Subtasks.length === 0 ? null : (
         <div className='create-task__item create-task__item--sub'>
           <span className='create-task__subtitle'>Subtasks</span>
-          {Subtasks.map((item, i) => (
+          {Subtasks.map((item: any, i) => (
             <div key={i} className='create-task__wrap-input'>
               <Input
                 placeholder='e.g. Take coffee break'

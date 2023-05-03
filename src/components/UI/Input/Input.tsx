@@ -2,7 +2,7 @@ import {FC} from 'react'
 import './Input.scss'
 
 type InputProps = {
-  placeholder: string
+  placeholder?: string
   value: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
